@@ -1,0 +1,14 @@
+node_modules
+.DS_Store
+*.log
+.vscode
+.idea
+dist
+compiled
+.awcache
+.rpt2_cache
+docs
+pratices
+.env
+.env*
+package-lock.json
