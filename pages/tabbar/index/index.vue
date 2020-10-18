@@ -2,9 +2,9 @@
   <view class="content">
     <!-- 自定义的搜索bar -->
     <navbar></navbar>
-    <view v-for="item in 100">
-      {{item}} neiron
-    </view>
+
+    <!-- tab 栏 -->
+    <tab :list="tabList"></tab>
   </view>
 </template>
 
@@ -18,14 +18,21 @@
     // },
     data() {
       return {
-        title: 'Hello'
+        title: 'Hello',
+        tabList: []
       }
     },
     onLoad() {
-
+      this.getLabel()
     },
     methods: {
-
+      // 因为 tab 是个组件，所以数据的管理是在“主”页面文件里
+      getLabel() {
+        this.$api.get_label()
+          .then((res) => {
+            this.tabList = res.data
+          })
+      }
     }
   }
 </script>
