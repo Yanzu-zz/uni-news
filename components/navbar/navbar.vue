@@ -5,7 +5,7 @@
       <!-- 状态栏的高度是获取设备的顶部高度设置的，在H5页面时为0，在其他程序时则自动设值 -->
       <view :style="{height: statusBarHeight + 'px'}"></view>
       <!-- 导航栏 -->
-      <view class="navbar-content" :style="{width: windowWidth+'px',height:navbarHeight+'px'}">
+      <view class="navbar-content" :style="{width: windowWidth + 'px',height:navbarHeight+'px'}">
         <view class="navbar-search">
           <view class="navbar-search_icon">
             <uni-icons type="search" size="16" color="#999"></uni-icons>
@@ -33,17 +33,17 @@
       // 获取手机系统信息
       const info = uni.getSystemInfoSync()
       this.statusBarHeight = info.statusBarHeight
-      
-      this.windowWidth = menuButtoninfo.left
+
+      this.windowWidth = info.windowWidth
 
       // #ifndef H5 || APP-PLUS || MP-ALIPAY
       // 获取胶囊的位置（微信小程序右上角分享和关闭位置）
-      const menuButtoninfo = uni.getMenuButtonBoundingClientRect()
+      const menuButtonInfo = uni.getMenuButtonBoundingClientRect()
 
       // 下面开始动态计算胶囊位置并给予相应的代码
       // （胶囊底部高度 - 状态栏的高度） + （胶囊顶部高度 - 状态栏的高度）= 导航栏的高度
-      this.navbarHeight = (menuButtoninfo.bottom - info.statusBarHeight) + (menuButtoninfo.top - info.statusBarHeight)
-
+      this.navbarHeight = (menuButtonInfo.bottom - info.statusBarHeight) + (menuButtonInfo.top - info.statusBarHeight)
+      this.windowWidth = menuButtonInfo.left
       // #endif
     }
   }
@@ -51,7 +51,7 @@
 
 <style lang="scss">
   @import '../../common/css/icons.css';
-  
+
   .navbar {
     width: 100%;
 

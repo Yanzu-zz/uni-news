@@ -3,7 +3,6 @@ const requireApi = require.context(
   '.', // api 目录的相对路径
   false, // 是否查询子目录
   /.js$/, // 查询文件的一个后缀
-
 )
 
 let module = {}
