@@ -1,66 +1,66 @@
 <template>
   <view>
     <!-- 基础卡片 -->
-    <view v-if="mode === 'base'" class="listcard">
+    <view v-if="item.mode === 'base'" class="listcard">
       <view class="listcard-image">
-        <image src="../../static/logo.png" mode="aspectFill"></image>
+        <image :src="item.cover[0]" mode="aspectFill"></image>
       </view>
 
       <view class="listcard-content">
         <view class="listcard-content__title">
-          <text>uni-app 开发搜地方数据大富科技阿斯诺伐克加了啥你复健科老鼠难打解放看来你速度极快反函数大家看 山东矿机粉红色大活佛阿萨德花覅偶</text>
+          <text>{{ item.title }}</text>
         </view>
 
         <view class="listcard-content__des">
           <view class="listcard-content__des-label">
-            <view class="listcard-content__des-label-item">前端</view>
+            <view class="listcard-content__des-label-item">{{ item.classify }}</view>
           </view>
 
-          <view class="listcard-content__des-browse">120浏览</view>
+          <view class="listcard-content__des-browse">{{ item.browse_count }} 浏览</view>
         </view>
       </view>
     </view>
 
 
     <!-- 多图模式 -->
-    <view v-if="mode === 'column'" class="listcard mode-column">
+    <view v-if="item.mode === 'column'" class="listcard mode-column">
       <view class="listcard-content">
         <view class="listcard-content__title">
-          <text>uni-app 开发搜地方数据大富科技阿斯诺伐克加了啥你复健科老鼠难打解放看来你速度极快反函数大家看 山东矿机粉红色大活佛阿萨德花覅偶</text>
+          <text>{{ item.title }}</text>
         </view>
 
         <view class="listcard-image">
-          <view v-for="item in 3" :key="item" class="listcard-image__item">
-            <image src="../../static/logo.png" mode="aspectFill"></image>
+          <view v-if="index < 3" v-for="(item, index) in item.cover" :key="index" class="listcard-image__item">
+            <image :src="item" mode="aspectFill"></image>
           </view>
         </view>
 
         <view class="listcard-content__des">
           <view class="listcard-content__des-label">
-            <view class="listcard-content__des-label-item">前端</view>
+            <view class="listcard-content__des-label-item">{{ item.classify }}</view>
           </view>
 
-          <view class="listcard-content__des-browse">120浏览</view>
+          <view class="listcard-content__des-browse">{{ item.browse_count }} 浏览</view>
         </view>
       </view>
     </view>
 
     <!-- 大图模式 -->
-    <view v-if="mode === 'image'" class="listcard mode-image">
+    <view v-if="item.mode === 'image'" class="listcard mode-image">
       <view class="listcard-image">
-        <image src="../../static/logo.png" mode="aspectFill"></image>
+        <image :src="item.cover[0]" mode="aspectFill"></image>
       </view>
       <view class="listcard-content">
         <view class="listcard-content__title">
-          <text>uni-app 开发搜地方数据大富科技阿斯诺伐克加了啥你复健科老鼠难打解放看来你速度极快反函数大家看 山东矿机粉红色大活佛阿萨德花覅偶</text>
+          <text>{{ item.title }}</text>
         </view>
 
         <view class="listcard-content__des">
           <view class="listcard-content__des-label">
-            <view class="listcard-c ontent__des-label-item">前端</view>
+            <view class="listcard-c ontent__des-label-item">{{ item.classify }}</view>
           </view>
 
-          <view class="listcard-content__des-browse">120浏览</view>
+          <view class="listcard-content__des-browse">{{ item.browse_count }} 浏览</view>
         </view>
       </view>
     </view>
@@ -70,9 +70,11 @@
 <script>
   export default {
     props: {
-      mode: {
-        type: String,
-        default: 'base'
+      item: {
+        type: Object,
+        default () {
+          return {}
+        }
       }
     },
     data() {

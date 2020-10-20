@@ -29,6 +29,8 @@
         windowWidth: 375
       };
     },
+    // 注意，onload 是用在页面上的
+    // 而组件就只能用过 create
     created() {
       // 获取手机系统信息
       const info = uni.getSystemInfoSync()

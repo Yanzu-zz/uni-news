@@ -6,7 +6,7 @@
     <!-- tab 栏 -->
     <tab :list="tabList" :tabIndex="tabIndex" @tab="tab"></tab>
 
-    <!-- 新闻内容（滚动） -->
+    <!-- 内容 -->
     <view class="home-list">
       <list :tab="tabList" :activeIndex="activeIndex" @change="change"></list>
     </view>
@@ -42,12 +42,20 @@
       },
       change(current) {
         this.tabIndex = current
+        this.activeIndex = current
       },
       // 因为 tab 是个组件，所以数据的管理是在“主”页面文件里
       getLabel() {
         this.$api.get_label()
           .then((res) => {
-            this.tabList = res.data
+            const {
+              data
+            } = res
+
+            data.unshift({
+              name: '全部'
+            })
+            this.tabList = data
           })
       }
     }
