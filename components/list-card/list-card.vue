@@ -9,8 +9,8 @@
       <view class="listcard-content">
         <view class="listcard-content__title">
           <text>{{ item.title }}</text>
-          
-          <likes></likes>
+
+          <likes :item="item"></likes>
         </view>
 
         <view class="listcard-content__des">
@@ -29,8 +29,8 @@
       <view class="listcard-content">
         <view class="listcard-content__title">
           <text>{{ item.title }}</text>
-          
-          <likes></likes>
+
+          <likes :item="item"></likes>
         </view>
 
         <view class="listcard-image">
@@ -57,8 +57,8 @@
       <view class="listcard-content">
         <view class="listcard-content__title">
           <text>{{ item.title }}</text>
-          
-          <likes></likes>
+
+          <likes :item="item"></likes>
         </view>
 
         <view class="listcard-content__des">
@@ -88,8 +88,8 @@
 
       };
     },
-    methods:{
-      open(){
+    methods: {
+      open() {
         console.log('打开')
       }
     }

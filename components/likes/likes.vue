@@ -1,28 +1,59 @@
 <template>
-  <view class="icons">
-    <uni-icons type="heart" size="20" 
-    color="#f07373" @click.stop="likeTap"></uni-icons>
+  <view class="icons" @click.stop="likeTap">
+    <uni-icons size="20" color="#f07373" :type="like?'heart-filled':'heart'"></uni-icons>
   </view>
 </template>
 
 <script>
   export default {
-    data() {
-      return {
-
+    props: {
+      item: {
+        type: Object,
+        default () {
+          return {}
+        }
       }
     },
-    methods:{
-      likeTap(){
-        console.log('收藏成功')
+    data() {
+      return {
+        like: false
+      };
+    },
+    watch: {
+      item(newVal) {
+        this.like = this.item.is_like
+      }
+    },
+    created() {
+      this.like = this.item.is_like
+    },
+    methods: {
+      likeTap() {
+        this.like = !this.like
+        this.setUpdateLikes()
+      },
+      setUpdateLikes() {
+        uni.showLoading()
+        this.$api.update_like({
+          user_id: '5f87b945d48ad40001f7d254',
+          article_id: this.item._id
+        }).then(res => {
+          uni.hideLoading()
+          uni.showToast({
+            title: this.like ? '收藏成功' : '取消收藏',
+            icon: 'none'
+          })
+        }).catch(() => {
+          uni.hideLoading()
+        })
       }
     }
   }
 </script>
 
-<style lang="scss">
+<style>
   .icons {
-    positon: absolute;
+    position: absolute;
     right: 0;
     top: 0;
     display: flex;
