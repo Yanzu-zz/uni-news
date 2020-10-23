@@ -5,9 +5,10 @@ export default function $http(options) {
   } = options
 
   const dataObj = {
-    user_id: '5f87b945d48ad40001f7d254',
-    ...data
+    user_id: '5f87b945d48ad40001f7d25a',
   }
+
+  Object.assign(dataObj, data)
 
   return new Promise((resolve, reject) => {
     // 调用云函数方法获取数据

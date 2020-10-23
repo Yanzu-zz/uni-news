@@ -90,7 +90,6 @@
     },
     methods: {
       open() {
-        console.log('打开')
       }
     }
   }

@@ -35,7 +35,7 @@
       setUpdateLikes() {
         uni.showLoading()
         this.$api.update_like({
-          user_id: '5f87b945d48ad40001f7d254',
+          user_id: '5f87b9429bd0910001807276',
           article_id: this.item._id
         }).then(res => {
           uni.hideLoading()

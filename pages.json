@@ -22,7 +22,16 @@
       }
 
     }
-  ],
+      ,{
+            "path" : "pages/home-search/home-search",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",

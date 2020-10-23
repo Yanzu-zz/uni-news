@@ -47,6 +47,13 @@
       this.navbarHeight = (menuButtonInfo.bottom - info.statusBarHeight) + (menuButtonInfo.top - info.statusBarHeight)
       this.windowWidth = menuButtonInfo.left
       // #endif
+    },
+    methods: {
+      open() {
+        uni.navigateTo({
+          url: '/pages/home-search/home-search'
+        })
+      }
     }
   }
 </script>
