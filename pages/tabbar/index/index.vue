@@ -2,7 +2,9 @@
   <view class="home">
     <!-- 自定义导航栏 -->
     <navbar></navbar>
+
     <tab :list="tabList" :tabIndex="tabIndex" @tab="tab"></tab>
+
     <view class="home-list">
       <list :tab="tabList" :activeIndex="activeIndex" @change="change"></list>
     </view>
@@ -21,7 +23,7 @@
       }
     },
     onLoad() {
-        this.getLabel()
+      this.getLabel()
     },
     methods: {
       change(current) {
