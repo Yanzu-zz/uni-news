@@ -22,7 +22,7 @@
 
         <!-- 搜索页显示 -->
         <view v-else class="navbar-search">
-          <input class="navbar-search_text" type="text" placeholder="请输入你需要输入的内容...">
+          <input class="navbar-search_text" type="text" v-model="val" placeholder="请输入你需要输入的内容..." @input="inputChange">
         </view>
       </view>
     </view>
@@ -44,7 +44,8 @@
       return {
         statusBarHeight: 20,
         navbarHeight: 45,
-        windowWidth: 375
+        windowWidth: 375,
+        val: ""
       };
     },
     // 注意，onload 是用在页面上的
@@ -72,6 +73,13 @@
         uni.navigateTo({
           url: '/pages/home-search/home-search'
         })
+      },
+      inputChange(e) {
+        const {
+          value
+        } = e.detail
+
+        this.$emit('input', value)
       }
     }
   }

@@ -1,6 +1,6 @@
 <template>
   <view class="home">
-    <navbar :isSearch="true"></navbar>
+    <navbar :isSearch="true" @input="change"></navbar>
 
     <view class="home-list">
       <!-- 历史搜索内容列表 -->
@@ -12,23 +12,40 @@
         </view>
 
         <!-- 真正显示的历史搜索标签 -->
-        <view class="label-content">
-          <view class="label-content__item" v-for="item in 13">{{item}} 内容</view>
+        <view v-if="historyLists.length > 0" class="label-content">
+          <view class="label-content__item" v-for="item in historyLists">{{item.name}}</view>
         </view>
+
+        <view v-else class="no-data">
+          没有搜索历史
+        </view>
+        <button type="default" @click="testBtn">Add history</button>
       </view>
     </view>
   </view>
 </template>
 
 <script>
+  import {
+    mapState
+  } from 'vuex'
+
   export default {
     data() {
       return {
 
       }
     },
+    computed: {
+      ...mapState(['historyLists'])
+    },
     methods: {
-
+      change(value) {},
+      testBtn() {
+        this.$store.dispatch('set_history', {
+          name: 'test'
+        })
+      }
     }
   }
 </script>
@@ -84,5 +101,14 @@
         color: #666;
       }
     }
+  }
+
+  .no-data {
+    width: 100%;
+    height: 200px;
+    line-height: 200px;
+    text-align: center;
+    color: #666;
+    font-size: 12px;
   }
 </style>
