@@ -8,7 +8,7 @@
       <view class="navbar-content" :class="{search:isSearch}" :style="{width: windowWidth + 'px',height:navbarHeight+'px'}"
         @click.stop="open">
         <!-- 返回按钮（首页不出现） -->
-        <view class="navbar-content__search-icons">
+        <view v-if="isSearch" class="navbar-content__search-icons" @click="back">
           <uni-icons type="back" size="22" color="#fff"></uni-icons>
         </view>
 
@@ -35,6 +35,10 @@
 <script>
   export default {
     props: {
+      value: {
+        type: [String, Number],
+        default: ''
+      },
       isSearch: {
         type: Boolean,
         default: false
@@ -45,8 +49,13 @@
         statusBarHeight: 20,
         navbarHeight: 45,
         windowWidth: 375,
-        val: ""
+        val: ''
       };
+    },
+    watch: {
+      value(newVal) {
+        this.val = newVal
+      }
     },
     // 注意，onload 是用在页面上的
     // 而组件就只能用过 create
@@ -68,6 +77,11 @@
       // #endif
     },
     methods: {
+      back() {
+        uni.switchTab({
+          url: '../../pages/tabbar/index/index'
+        })
+      },
       open() {
         if (this.isSearch) return
         uni.navigateTo({
@@ -121,6 +135,7 @@
           }
 
           .navbar-search_text {
+            width: 100%;
             font-size: 14px;
             color: #999;
           }

@@ -90,6 +90,8 @@
     },
     methods: {
       open() {
+        console.log('click item')
+        this.$emit('click', this.item)
       }
     }
   }

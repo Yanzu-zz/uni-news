@@ -1,26 +1,34 @@
 <template>
   <view class="home">
-    <navbar :isSearch="true" @input="change"></navbar>
+    <navbar :isSearch="true" v-model="value" @input="change"></navbar>
 
     <view class="home-list">
       <!-- 历史搜索内容列表 -->
-      <view class="label-box">
+      <view v-if="is_history" class="label-box">
         <!-- 标题操作区域 -->
         <view class="label-header">
           <text class="label-title">搜索历史</text>
-          <text class="label-clear">清空</text>
+          <text class="label-clear" @click="clear">清空</text>
         </view>
 
         <!-- 真正显示的历史搜索标签 -->
         <view v-if="historyLists.length > 0" class="label-content">
-          <view class="label-content__item" v-for="item in historyLists">{{item.name}}</view>
+          <view class="label-content__item" v-for="(item, index) in historyLists" :key="index" @click="openHistory(item)">{{item.name}}</view>
         </view>
 
         <view v-else class="no-data">
           没有搜索历史
         </view>
-        <button type="default" @click="testBtn">Add history</button>
       </view>
+
+      <list-scroll v-else class="list-scroll">
+        <uni-load-more v-if="loading" status="loading" iconType="snow"></uni-load-more>
+
+        <view v-if="searchList.length > 0">
+          <list-card :item="item" v-for="item in searchList" :key="item._id" @click="setHistory"></list-card>
+        </view>
+        <view v-if="searchList.length === 0 && !loading" class="no-data">没有搜索到相关数据</view>
+      </list-scroll>
     </view>
   </view>
 </template>
@@ -33,17 +41,73 @@
   export default {
     data() {
       return {
-
+        value: '',
+        is_history: true,
+        searchList: [],
+        loading: false
       }
     },
     computed: {
       ...mapState(['historyLists'])
     },
+    onLoad() {
+      // this.getSearch()
+    },
     methods: {
-      change(value) {},
-      testBtn() {
+      setHistory(item) {
         this.$store.dispatch('set_history', {
-          name: 'test'
+          name: this.value
+        })
+      },
+      openHistory(item) {
+        this.value = item.name
+        this.getSearch(this.value)
+      },
+      change(value) {
+        if (!value) {
+          clearTimeout(this.timer)
+          this.mark = false
+          this.getSearch(value)
+          return
+        }
+
+        // 不能输入一次搜索一次，这样服务器开销会很大
+        // 函数节流
+        if (!this.mark) {
+          this.mark = true
+          this.timer = setTimeout(() => {
+            this.mark = false
+            this.getSearch(value)
+          }, 1000)
+        }
+      },
+      clear() {
+        this.$store.dispatch('clearHistory')
+        uni.showToast({
+          title: '清空完成'
+        })
+      },
+      getSearch(value) {
+        if (!value) {
+          this.searchList = []
+          this.is_history = true
+          return
+        }
+
+        this.is_history = false
+        // 显示加载中图标，反馈信息更明确
+        this.loading = true
+        this.$api.get_search({
+          value
+        }).then(res => {
+          const {
+            data
+          } = res
+
+          this.loading = false
+          this.searchList = data
+        }).catch(() => {
+          this.loading = false
         })
       }
     }
@@ -109,6 +173,6 @@
     line-height: 200px;
     text-align: center;
     color: #666;
-    font-size: 12px;
+    font-size: 16px;
   }
 </style>
