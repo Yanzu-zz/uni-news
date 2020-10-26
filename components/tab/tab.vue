@@ -8,7 +8,7 @@
     </scroll-view>
 
     <!-- tab 栏设置图标 -->
-    <view class="tab-icons">
+    <view class="tab-icons" @click="open">
       <uni-icons type="gear" size="26" color="#666"></uni-icons>
     </view>
   </view>
@@ -48,7 +48,12 @@
           data: item,
           index: index
         })
-      }
+      },
+      open() {
+        uni.navigateTo({
+          url: '/pages/home-label/home-label'
+        })
+      },
     }
   }
 </script>
