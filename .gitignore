@@ -12,4 +12,3 @@ pratices
 .env
 .env*
 package-lock.json
-cloudfunctions-aliyun
